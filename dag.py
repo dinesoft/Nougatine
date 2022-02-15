@@ -40,7 +40,7 @@ download_raw_data = download_raw_data(YEAR, MONTH, YESTERDAY)
 clean_data = BashOperator(
     task_id="spark_job_clean",
     #  compléter le spark submit
-    bash_command=f"spark-submit --master yarn --deploy-mode cluster --jars clean.jar --class Clean.main  /data/g3/raw/data-{YEAR}-{MONTH}-{YESTERDAY}.csv /data/g3/clean/comptages.parquet",
+    bash_command=f"spark-submit --master yarn --deploy-mode cluster --jars clean.jar --class Clean.main  /data/g3/raw/data-{YEAR}-{MONTH}-{YESTERDAY}.csv /data/g3/clean/data-{YEAR}-{MONTH}-{YESTERDAY}.parquet",
     dag=dag
 )
 
@@ -49,7 +49,7 @@ clean_data = BashOperator(
 transform_data = BashOperator(
     task_id="spark_job_transform",
     # TODO : compléter le spark submit
-    bash_command=f"spark-submit --master yarn --deploy-mode cluster --jars clean.jar --class Jointure.main /data/g3/clean/comptages.parquet /data/g3/join/trust.parquet",
+    bash_command=f"spark-submit --master yarn --deploy-mode cluster --jars clean.jar --class Jointure.main /data/g3/clean/data-{YEAR}-{MONTH}-{YESTERDAY}.parquet /data/g3/join/trust.parquet",
     dag=dag
 )
 
