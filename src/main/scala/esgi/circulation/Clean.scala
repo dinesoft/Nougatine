@@ -22,6 +22,8 @@ object Clean {
 
     val df = spark.read.csv(inputFile)
 
+    df.na.drop(Seq("Etat trafic")).show(false)
+
     df.write.parquet(outputFile)
   }
 }
